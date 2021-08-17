@@ -9,7 +9,7 @@ const passport = require('passport')
 const flash = require('connect-flash');
 require('dotenv').config();
 
-
+router.use(bodyParser.json());
 //jwt
 const bcrypt = require('bcrypt'); //해쉬된 비밀번호를 비교하기위한 모듈
 let jwt = require("jsonwebtoken");
@@ -21,8 +21,6 @@ let secretObj = require("./jwt");
 //   resave: false,
 //   saveUninitialized: true
 // }));
-//
-router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cookieParser('keyboard cat')); //?
 router.use(session({secret: 'keyboard cat'})); //?
@@ -158,9 +156,9 @@ router.post('/', function(req, res, next) {
 /////////// 회원가입 mysql 구현
 router.post('/signup', function(req, res) {
     user_id= req.body.user_id;
-    user_pw = req.body.user_pw;
-    signup_type=req.body.signup_type;
-    res.json("user_id:"+user_id+","+"user_pw:"+user_pw+","+"signup_type:"+signup_type);
+    user_pw = req.body.password_hash;
+    signup_type=req.body.login_type;
+    res.json("user_id:"+user_id+","+"user_pw:"+user_pw+","+"signup_type:"+login_type);
     var sql ='insert into users(user_id,password_hash,login_type) values(?,?,?)';
     var params=[user_id,user_pw,signup_type];
     db.query(sql,params,function(err,rows){

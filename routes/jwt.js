@@ -1,5 +1,4 @@
-let jwtObj = {};
+let jwtkey={};
+jwtkey.secret="apple"
 
-jwtObj.secret = "apple"
-
-module.exports = jwtObj
+module.exports=jwtkey
